@@ -21,12 +21,13 @@ pipeline {
         sh './mvnw package'
       }
     }
-    if (env.BRANCH_NAME == "mater" ) {
-      stage('Deploy') {
-        steps {
-          echo 'Deployed'
-          echo 'notify slack'
-        }
+    stage('Deploy') {
+      when {
+        branch 'master'
+      }
+      steps {
+        echo 'Deploying....'
+        echo 'notify slack'
       }
     }
   }
