@@ -22,7 +22,10 @@ pipeline {
             }
             post {
                 success {
-                    slackSend color: 'good', message: 'Build Succeeded: {$GIT_BRANCH} ${JOB_NAME}-${BUILD_NUMBER}'
+                    slackSend color: 'good', message: "Build Succeeded: {$env.GIT_BRANCH} | ${env.JOB_NAME}-${env.BUILD_NUMBER} | ${env.BUILD_STATUS}"
+                }
+                failure {
+                    slackSend color: 'bad', message: "Build Failed: {$env.GIT_BRANCH} | ${env.JOB_NAME}-${env.BUILD_NUMBER} | ${env.BUILD_STATUS}"
                 }
             }
         }
@@ -32,7 +35,7 @@ pipeline {
             }
             steps {
                 echo 'Deploying....'
-                slackSend color: 'good', message: 'Deployed'
+                slackSend color: 'good', message: "{$env.GIT_BRANCH} Deployed"
             }
         }
     }
